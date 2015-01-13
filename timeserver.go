@@ -3,12 +3,12 @@
 package main
 
 import (
-		"fmt"
-		"time"
-		"flag"
-		"os"
-		"net/http"
-		)
+	"fmt"
+	"time"
+	"flag"		
+	"os"
+	"net/http"
+	)
 
 // Version Number
 const AppVersion = "timeserver version: 1.0"
@@ -18,9 +18,9 @@ func timeserver(w http.ResponseWriter, r *http.Request) {
 	
 	// if url is off then 404
 	if r.URL.Path != "/time/" {
-        NotFoundHandler(w, r)
-        return
-    }
+	NotFoundHandler(w, r)
+	return
+	}
 	// time formatting
 	const layout = "3:04:05 PM"
 	
@@ -60,10 +60,10 @@ func main() {
 	
 	// parse flags, if -V print version number and exit
 	flag.Parse()
-    if *version {
-      fmt.Println(AppVersion)
-      os.Exit(0)
-    }
+	if *version {
+      		fmt.Println(AppVersion)
+      		os.Exit(0)
+    	}
 	
 	// add handlers to the DefaultServeMux
 	http.HandleFunc("/", NotFoundHandler)
