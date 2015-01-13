@@ -69,6 +69,10 @@ func main() {
 	http.HandleFunc("/", NotFoundHandler)
 	http.HandleFunc("/time/", timeserver)
 	
-	// Start the server
-	http.ListenAndServe("localhost:" + *port, nil)
+	// Start the server, print error message if any problem
+	err := http.ListenAndServe("localhost:" + *port, nil)
+	if err != nil {
+		fmt.Println("Server Error: %s", err)
+		os.Exit(1)
+	}
 }
