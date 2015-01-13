@@ -7,5 +7,7 @@ Open a browser and navigate to localhost:8080/time
 
 
 flags:
+
 -V                Check the current version
+
 -p port_number    give a port number to use, default is 8080.
