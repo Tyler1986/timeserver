@@ -9,9 +9,9 @@ import (
 	"os"
 	"net/http"
 	)
-
+	
 // Version Number
-const AppVersion = "timeserver version: 1.0"
+const AppVersion = "timeserver version: 1.1"
 
 // Handler for timeserver, prints the current time to the second
 func timeserver(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +42,7 @@ func timeserver(w http.ResponseWriter, r *http.Request) {
 }
 
 // Login Handler
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+func LoginForm(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" && r.URL.Path != "/index/" {
 		NotFoundHandler(w, r)
 		return
@@ -57,6 +57,28 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "</form>")
 	fmt.Fprintln(w, "</body>")
 	fmt.Fprintln(w, "</html>")
+	
+}
+
+func Login(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, r.URL.Path)
+	fmt.Fprintln(w, r.URL.Query().Get("name"))
+}
+
+// Logout Handler
+func Logout(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/logout/" {
+		NotFoundHandler(w, r)
+		return
+		}
+		
+	fmt.Fprintln(w, "<html>")
+	fmt.Fprintln(w, "<head>")
+	fmt.Fprintln(w, "<META http-equiv=\"refresh\" content=\"10;URL=/\">")
+	fmt.Fprintln(w, "<body>")
+	fmt.Fprintln(w, "<p>Good-bye.</p>")
+	fmt.Fprintln(w, "</body>")
+	fmt.Fprintln(w, "</html>")
 }
 
 // 404 error handler
@@ -67,6 +89,8 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "<p>These are not the URLs you're looking for.</p>")
 	fmt.Fprintln(w, "</body>")
 	fmt.Fprintln(w, "</html>")
+	
+	//fmt.Fprintln(w, r.URL.Path)			// test code 
 }
 
 func main() {
@@ -84,9 +108,12 @@ func main() {
     	}
 	
 	// add handlers to the DefaultServeMux
-	http.HandleFunc("/", LoginHandler)
-	http.HandleFunc("/index/", LoginHandler)
+	http.HandleFunc("/", LoginForm)
+	http.HandleFunc("/index/", LoginForm)
 	http.HandleFunc("/time/", timeserver)
+	http.HandleFunc("/login", Login)
+	http.HandleFunc("/logout/", Logout)
+	
 	
 	// Start the server, print error message if any problem
 	err := http.ListenAndServe("localhost:" + *port, nil)
