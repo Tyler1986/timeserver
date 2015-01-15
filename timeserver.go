@@ -1,4 +1,4 @@
-// Author: Tyler Hills 	1/13/15
+// Author: Tyler Hills
 
 package main
 
@@ -41,6 +41,24 @@ func timeserver(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "</html>")
 }
 
+// Login Handler
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" && r.URL.Path != "/index/" {
+		NotFoundHandler(w, r)
+		return
+		}
+		
+	fmt.Fprintln(w, "<html>")
+	fmt.Fprintln(w, "<body>")
+	fmt.Fprintln(w, "<form action=\"login\">")
+	fmt.Fprintln(w, "What is your name, Earthling?")
+	fmt.Fprintln(w, "<input type=\"text\" name=\"name\" size=\"50\">")
+	fmt.Fprintln(w, "<input type=\"submit\">")
+	fmt.Fprintln(w, "</form>")
+	fmt.Fprintln(w, "</body>")
+	fmt.Fprintln(w, "</html>")
+}
+
 // 404 error handler
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
@@ -66,7 +84,8 @@ func main() {
     	}
 	
 	// add handlers to the DefaultServeMux
-	http.HandleFunc("/", NotFoundHandler)
+	http.HandleFunc("/", LoginHandler)
+	http.HandleFunc("/index/", LoginHandler)
 	http.HandleFunc("/time/", timeserver)
 	
 	// Start the server, print error message if any problem
