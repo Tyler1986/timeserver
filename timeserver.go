@@ -36,7 +36,7 @@ func timeserver(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "</style>")
 	fmt.Fprintln(w, "</head>")
 	fmt.Fprintln(w, "<body>")
-	fmt.Fprintln(w, "<p>The time is now <span class=\"time\">" + t.Format(layout) + "</span>.</p>")
+	fmt.Fprintln(w, "<p>The time is now <span class=\"time\">" + t.Format(local) + "</span> (" + t.UTC().Format(UTC) + ").</p>")
 	fmt.Fprintln(w, "</body>")
 	fmt.Fprintln(w, "</html>")
 }
