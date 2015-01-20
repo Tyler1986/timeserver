@@ -11,7 +11,7 @@ import (
 	)
 
 // Version Number
-const AppVersion = "timeserver version: 1.0"
+const AppVersion = "timeserver version: 1.1"
 
 // Handler for timeserver, prints the current time to the second
 func timeserver(w http.ResponseWriter, r *http.Request) {
